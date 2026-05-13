@@ -1,8 +1,8 @@
+<?php include "plantilla.php"; ?>
 <?php
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 include "db_connect.php";
-include "plantilla.php";
 
 // FILTRO
 $busqueda = trim($_GET['busqueda'] ?? '');

@@ -1,3 +1,6 @@
+<?php include "plantilla.php"; ?>
+<?php include "db_connect.php"; ?>
+
 <?php
 // buscar_cita_resultado.php
 

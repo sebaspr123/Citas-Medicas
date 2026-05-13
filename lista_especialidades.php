@@ -1,8 +1,8 @@
+<?php include "plantilla.php"; ?>
 <?php
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 require_once "db_connect.php";
-include "plantilla.php";
 
 // Eliminar especialidad
 if (isset($_GET['eliminar'])) {
