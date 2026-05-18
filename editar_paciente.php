@@ -1,3 +1,6 @@
+<?php include "plantilla.php"; ?>
+<?php include "db_connect.php"; ?>
+
 <?php
 // editar_paciente.php
 ini_set('display_errors',1); error_reporting(E_ALL);

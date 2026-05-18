@@ -1,3 +1,4 @@
+<?php require_once "auth.php"; ?>
 <!doctype html>
 <html lang="es">
 
@@ -42,6 +43,9 @@
             height: 100vh;
             overflow-y: auto;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .sidebar h2 {
@@ -50,6 +54,7 @@
             font-size: 22px;
             font-weight: 700;
             letter-spacing: 0.5px;
+            padding: 0 20px;
         }
 
         .menu a {
@@ -64,13 +69,49 @@
         }
 
         .menu a:hover,
-        .menu a:active {
+        .menu a.active {
             background: rgba(255, 255, 255, 0.15);
             color: white;
             border-left-color: #fff;
             padding-left: 22px;
         }
 
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: auto;
+        }
+
+        .sidebar-footer .operador-info {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-logout {
+            display: block;
+            text-align: center;
+            padding: 9px 12px;
+            background: rgba(220, 53, 69, 0.85);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(220, 53, 69, 0.5);
+        }
+
+        .btn-logout:hover {
+            background: rgba(220, 53, 69, 1);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* --- CONTENIDO --- */
         .content {
             flex: 1;
             margin-left: 260px;
@@ -207,24 +248,45 @@
 
 <body>
     <div class="layout">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <h2><i class="bi bi-hospital"></i> Clínica Citas</h2>
-            <nav class="menu">
-                <a href="index.php"><i class="bi bi-house-door"></i> Inicio</a>
-                <a href="registrar_paciente.php"><i class="bi bi-person-plus"></i> Registrar Paciente</a>
-                <a href="lista_pacientes.php"><i class="bi bi-people"></i> Pacientes</a>
 
-                <a href="registrar_medico.php"><i class="bi bi-stethoscope"></i> Registrar Médico</a>
-                <a href="lista_medicos.php"><i class="bi bi-person-badge"></i> Médicos</a>
+            <div>
+                <h2><i class="bi bi-hospital"></i> Clínica Citas</h2>
+                <nav class="menu">
+                    <a href="index.php"><i class="bi bi-house-door me-2"></i> Inicio</a>
+                    <a href="registrar_paciente.php"><i class="bi bi-person-plus me-2"></i> Registrar Paciente</a>
+                    <a href="lista_pacientes.php"><i class="bi bi-people me-2"></i> Pacientes</a>
+                    <a href="registrar_medico.php"><i class="bi bi-stethoscope me-2"></i> Registrar Médico</a>
+                    <a href="lista_medicos.php"><i class="bi bi-person-badge me-2"></i> Médicos</a>
+                    <a href="registrar_cita.php"><i class="bi bi-calendar-plus me-2"></i> Registrar Cita</a>
+                    <a href="buscar_cita.php"><i class="bi bi-search me-2"></i> Buscar Cita</a>
+                    <a href="calendario.php"><i class="bi bi-calendar2 me-2"></i> Calendario</a>
+                    <a href="registrar_especialidad.php"><i class="bi bi-tags me-2"></i> Especialidades</a>
+                    <a href="registrar_consultorio.php"><i class="bi bi-door-closed me-2"></i> Consultorios</a>
+                    <a href="registrar_empleado.php"><i class="bi bi-briefcase me-2"></i> Empleados</a>
+                </nav>
+            </div>
 
-                <a href="registrar_cita.php"><i class="bi bi-calendar-plus"></i> Registrar Cita</a>
-                <a href="buscar_cita.php"><i class="bi bi-search"></i> Buscar Cita</a>
-                <a href="calendario.php"><i class="bi bi-calendar2"></i> Calendario</a>
+            <!-- Operador activo y cerrar sesión -->
+            <div class="sidebar-footer">
+                <div class="operador-info">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <div>
+                        <div class="fw-semibold text-white">
+                            <?= htmlspecialchars($_SESSION['nombre']) ?>
+                        </div>
+                        <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">
+                            <?= htmlspecialchars($_SESSION['rol']) ?>
+                        </div>
+                    </div>
+                </div>
+                <a href="logout.php" class="btn-logout">
+                    <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                </a>
+            </div>
 
-                <a href="registrar_especialidad.php"><i class="bi bi-tags"></i> Especialidades</a>
-                <a href="registrar_consultorio.php"><i class="bi bi-door-closed"></i> Consultorios</a>
-                <a href="registrar_empleado.php"><i class="bi bi-briefcase"></i> Empleados</a>
-            </nav>
         </aside>
 
         <!-- CONTENIDO PRINCIPAL -->

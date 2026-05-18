@@ -1,6 +1,5 @@
-<?php
-include "db_connect.php";
-include "plantilla.php";
+<?php include "plantilla.php"; ?>
+<?php include "db_connect.php";
 
 // ==========================================
 // ELIMINAR EMPLEADO

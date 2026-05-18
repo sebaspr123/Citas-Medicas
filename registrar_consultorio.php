@@ -1,5 +1,5 @@
-<?php
-include "db_connect.php";
+<?php include "plantilla.php"; ?>
+<?php include "db_connect.php";
 
 $info = []; 
 $errors = [];

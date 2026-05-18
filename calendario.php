@@ -1,4 +1,6 @@
 <?php include "plantilla.php"; ?>
+<?php include "db_connect.php"; ?>
+
 
 <style>
 /* --- ESTILO DE CALENDARIO TIPO COMPUTADOR --- */

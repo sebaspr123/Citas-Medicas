@@ -1,6 +1,5 @@
-<?php
-include "plantilla.php";
-include "db_connect.php";
+<?php include "plantilla.php"; ?>
+<?php include "db_connect.php";
 
 $totalPacientes = $conn->query("SELECT COUNT(*) AS c FROM paciente")->fetch_assoc()['c'];
 $totalMedicos   = $conn->query("SELECT COUNT(*) AS c FROM medico")->fetch_assoc()['c'];

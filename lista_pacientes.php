@@ -1,3 +1,4 @@
+<?php include "plantilla.php"; ?>
 <?php
 ini_set('display_errors',1);
 error_reporting(E_ALL);
@@ -25,7 +26,6 @@ if (isset($_GET['ok'])) {
     $info[] = "Paciente eliminado correctamente.";
 }
 
-include "plantilla.php";
 ?>
 
 <div class="card mx-auto" style="max-width: 1100px;">
