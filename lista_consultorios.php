@@ -1,68 +1,103 @@
 <?php include "plantilla.php"; ?>
 <?php
-ini_set('display_errors',1);
-error_reporting(E_ALL);
-require_once "db_connect.php";
+soloAdmin(); // Solo administradores pueden gestionar consultorios
+include "db_connect.php";
 
-// Eliminar consultorio
+// ==========================================
+// ELIMINAR CONSULTORIO
+// ==========================================
 if (isset($_GET['eliminar'])) {
     $id = intval($_GET['eliminar']);
 
-    $del = $conn->prepare("DELETE FROM consultorio WHERE id_consultorio = ?");
-    $del->bind_param("i", $id);
-    $del->execute();
-    $del->close();
+    // Verificar si tiene citas activas (Pendiente o Confirmada)
+    $check = $conn->prepare("
+        SELECT COUNT(*) AS total FROM cita
+        WHERE id_consultorio = ? AND estado IN ('Pendiente', 'Confirmada')
+    ");
+    $check->bind_param("i", $id);
+    $check->execute();
+    $total = $check->get_result()->fetch_assoc()['total'];
+    $check->close();
+
+    if ($total > 0) {
+        header("Location: lista_consultorios.php?msg_error=No+se+puede+eliminar:+el+consultorio+tiene+$total+cita(s)+activa(s).");
+        exit;
+    }
+
+    $stmt = $conn->prepare("DELETE FROM consultorio WHERE id_consultorio = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: lista_consultorios.php?msg=Consultorio+eliminado+correctamente.");
+    exit;
 }
 
-// Consultar consultorios
-$result = $conn->query("SELECT * FROM consultorio ORDER BY id_consultorio DESC");
+// ==========================================
+// LISTAR CONSULTORIOS
+// ==========================================
+$result = $conn->query("SELECT * FROM consultorio ORDER BY piso, numero");
 ?>
 
-<div class="card mx-auto" style="max-width: 800px;">
-    <h2 class="card-header bg-primary text-white pb-3 mb-4">
-        <i class="bi bi-door-closed"></i> Listado de Consultorios
+<div class="card mx-auto" style="max-width: 900px;">
+  <div style="padding: 30px;">
+    <h2 class="card-header bg-primary text-white pb-3 mb-4"
+        style="margin: -30px -30px 20px -30px; padding: 20px 30px;">
+      <i class="bi bi-door-closed-fill"></i> Consultorios
     </h2>
 
+    <?php if (isset($_GET['msg'])): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle"></i> <?= htmlspecialchars($_GET['msg']) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['msg_error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i> <?= htmlspecialchars($_GET['msg_error']) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+
     <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th><i class="bi bi-hash"></i> ID</th>
-                    <th><i class="bi bi-door-closed"></i> Número</th>
-                    <th><i class="bi bi-building"></i> Piso</th>
-                    <th style="text-align: center;"><i class="bi bi-gear"></i> Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= $row['id_consultorio'] ?></td>
-                            <td><strong><?= htmlspecialchars($row['numero']) ?></strong></td>
-                            <td><?= htmlspecialchars($row['piso']) ?></td>
-                            <td style="text-align: center;">
-                                <a href="?eliminar=<?= $row['id_consultorio'] ?>"
-                                   onclick="return confirm('¿Seguro que deseas eliminar este consultorio?')"
-                                   class="btn btn-sm btn-danger" title="Eliminar">
-                                   <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr><td colspan="4" style="text-align:center;" class="py-4">
-                        <i class="bi bi-inbox"></i> No hay consultorios registrados.
-                    </td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><i class="bi bi-hash"></i> Número</th>
+            <th><i class="bi bi-layers"></i> Piso</th>
+            <th><i class="bi bi-geo-alt"></i> Ubicación</th>
+            <th style="text-align:center;"><i class="bi bi-gear"></i> Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = $result->fetch_assoc()): ?>
+          <tr>
+            <td><?= $row['id_consultorio'] ?></td>
+            <td><strong><?= htmlspecialchars($row['numero']) ?></strong></td>
+            <td><?= $row['piso'] ?></td>
+            <td><?= htmlspecialchars($row['ubicacion'] ?? '—') ?></td>
+            <td style="text-align:center;">
+              <a class="btn btn-sm btn-danger"
+                 href="lista_consultorios.php?eliminar=<?= $row['id_consultorio'] ?>"
+                 title="Eliminar"
+                 onclick="return confirm('¿Eliminar este consultorio? Solo es posible si no tiene citas activas.');">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
     </div>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-        <a href="registrar_consultorio.php" class="btn btn-success">
-            <i class="bi bi-door-closed"></i> Agregar Consultorio
-        </a>
+    <div class="d-flex justify-content-end mt-4">
+      <a href="registrar_consultorio.php" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Agregar Consultorio
+      </a>
     </div>
+  </div>
 </div>
 
 <?php include "footer.php"; ?>
