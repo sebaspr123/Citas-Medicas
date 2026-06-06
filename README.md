@@ -111,6 +111,12 @@ Abre tu navegador en: [http://localhost:8000](http://localhost:8000)
 | **Administrador** | Acceso total: gestión de médicos, consultorios, especialidades y usuarios |
 | **Empleado** | Registrar y buscar citas, gestionar pacientes |
 
+## 🔑 Usuarios de Prueba
+
+| Usuario | Contraseña | Rol |
+|---|---|---|
+| `admin` | `admin123` | Administrador |
+| `empleado1` | `emp123` | Empleado |
 ---
 
 ## ✨ Funcionalidades
