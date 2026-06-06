@@ -115,8 +115,8 @@ Abre tu navegador en: [http://localhost:8000](http://localhost:8000)
 
 | Usuario | Contraseña | Rol |
 |---|---|---|
-| `admin` | `admin123` | Administrador |
-| `empleado1` | `emp123` | Empleado |
+| `Administrador1` | `Operador2026` | Administrador |
+| `AndresAgamez` | `Andres123` | Empleado |
 ---
 
 ## ✨ Funcionalidades
