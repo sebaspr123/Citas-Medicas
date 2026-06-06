@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="btn btn-primary" type="submit">
           <i class="bi bi-check-circle"></i> Registrar Especialidad
         </button>
-        <a href="lista_especialidades.php" class="btn btn-secondary">
+        <a href="../especialidades/lista_especialidades.php" class="btn btn-secondary">
           <i class="bi bi-arrow-left"></i> Ver listado
         </a>
       </div>

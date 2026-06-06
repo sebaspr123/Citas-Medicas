@@ -1,4 +1,5 @@
-﻿<?php require_once "../auth/auth.php"; ?>
+﻿<?php require_once __DIR__ . "/../auth/auth.php";
+define('BASE_URL', '/'); ?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -174,25 +175,25 @@
 
         <!-- ── Módulos disponibles para TODOS los usuarios ── -->
         <div class="menu-section-label">General</div>
-        <a href="index.php"><i class="bi bi-house-door me-2"></i> Inicio</a>
-        <a href="registrar_cita.php"><i class="bi bi-calendar-plus me-2"></i> Registrar Cita</a>
-        <a href="buscar_cita.php"><i class="bi bi-search me-2"></i> Buscar Cita</a>
-        <a href="calendario.php"><i class="bi bi-calendar2 me-2"></i> Calendario</a>
+        <a href="<?= BASE_URL ?>index.php"><i class="bi bi-house-door me-2"></i> Inicio</a>
+        <a href="<?= BASE_URL ?>citas/registrar_cita.php"><i class="bi bi-calendar-plus me-2"></i> Registrar Cita</a>
+        <a href="<?= BASE_URL ?>citas/buscar_cita.php"><i class="bi bi-search me-2"></i> Buscar Cita</a>
+        <a href="<?= BASE_URL ?>citas/calendario.php"><i class="bi bi-calendar2 me-2"></i> Calendario</a>
 
         <div class="menu-section-label">Pacientes</div>
-        <a href="registrar_paciente.php"><i class="bi bi-person-plus me-2"></i> Registrar Paciente</a>
-        <a href="lista_pacientes.php"><i class="bi bi-people me-2"></i> Lista de Pacientes</a>
+        <a href="<?= BASE_URL ?>pacientes/registrar_paciente.php"><i class="bi bi-person-plus me-2"></i> Registrar Paciente</a>
+        <a href="<?= BASE_URL ?>pacientes/lista_pacientes.php"><i class="bi bi-people me-2"></i> Lista de Pacientes</a>
 
         <div class="menu-section-label">Médicos</div>
-        <a href="lista_medicos.php"><i class="bi bi-person-badge me-2"></i> Lista de Médicos</a>
+        <a href="<?= BASE_URL ?>medicos/lista_medicos.php"><i class="bi bi-person-badge me-2"></i> Lista de Médicos</a>
 
         <?php if ($_SESSION['rol'] === 'admin'): ?>
         <!-- ── Módulos exclusivos del ADMINISTRADOR ── -->
         <div class="menu-section-label">Administración</div>
-        <a href="registrar_medico.php"><i class="bi bi-stethoscope me-2"></i> Registrar Médico</a>
-        <a href="lista_especialidades.php"><i class="bi bi-tags me-2"></i> Especialidades</a>
-        <a href="lista_consultorios.php"><i class="bi bi-door-closed me-2"></i> Consultorios</a>
-        <a href="lista_empleados.php"><i class="bi bi-briefcase me-2"></i> Usuarios del Sistema</a>
+        <a href="<?= BASE_URL ?>medicos/registrar_medico.php"><i class="bi bi-stethoscope me-2"></i> Registrar Médico</a>
+        <a href="<?= BASE_URL ?>admin/especialidades/lista_especialidades.php"><i class="bi bi-tags me-2"></i> Especialidades</a>
+        <a href="<?= BASE_URL ?>admin/consultorios/lista_consultorios.php"><i class="bi bi-door-closed me-2"></i> Consultorios</a>
+        <a href="<?= BASE_URL ?>admin/empleados/lista_empleados.php"><i class="bi bi-briefcase me-2"></i> Usuarios del Sistema</a>
         <?php endif; ?>
 
       </nav>
@@ -209,7 +210,7 @@
           </span>
         </div>
       </div>
-      <a href="logout.php" class="btn-logout">
+      <a href="<?= BASE_URL ?>auth/logout.php" class="btn-logout">
         <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
       </a>
     </div>

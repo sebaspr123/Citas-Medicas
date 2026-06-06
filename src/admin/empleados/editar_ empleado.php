@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="btn" type="submit">Guardar Cambios</button>
     </form>
 
-    <a href="lista_empleados.php" class="btn" style="margin-top:15px;">Volver</a>
+    <a href="../index.phpadmin/empleados/lista" class="btn" style="margin-top:15px;">Volver</a>
 </div>
 
 <?php include "../../includes/footer.php"; ?>

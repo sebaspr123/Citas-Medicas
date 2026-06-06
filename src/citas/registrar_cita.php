@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-calendar-check me-1"></i> Registrar Cita
                     </button>
-                    <a href="index.php" class="btn btn-secondary">
+                    <a href="../index.php" class="btn btn-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Cancelar
                     </a>
                 </div>
@@ -163,7 +163,7 @@ inputPaciente.addEventListener('input', async function () {
     if (texto.length < 2) return;
 
     try {
-        const response = await fetch(`buscar_paciente_ajax.php?q=${encodeURIComponent(texto)}`);
+        const response = await fetch(`/utils/buscar_paciente_ajax.php?q=${encodeURIComponent(texto)}`);
         const pacientes = await response.json();
 
         if (!Array.isArray(pacientes) || pacientes.length === 0) {

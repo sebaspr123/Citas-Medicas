@@ -4,8 +4,7 @@
 <?php
 ini_set('display_errors',1);
 error_reporting(E_ALL);
-include "../config/db_connect.php";
-include "../includes/plantilla.php";
+
 
 // Validar ID
 $id = intval($_GET['id'] ?? 0);
@@ -147,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button class="btn btn-primary" type="submit">
                 <i class="bi bi-check-circle"></i> Guardar Cambios
             </button>
-            <a href="lista_medicos.php" class="btn btn-secondary">
+            <a href="/medicos/lista_medicos.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Volver
             </a>
         </div>

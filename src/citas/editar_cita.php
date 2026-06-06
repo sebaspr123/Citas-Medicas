@@ -2,14 +2,12 @@
 <?php include "../config/db_connect.php"; ?>
 
 <?php
-include("../includes/plantilla.php");
-include("../config/db_connect.php");
 
 $mensaje = "";
 
 // Verificar si viene un ID por URL
 if (!isset($_GET['id'])) {
-    header("Location: buscar_cita.php");
+    header("citas/buscar");
     exit();
 }
 
@@ -34,7 +32,7 @@ function getCita($conn, $id_cita)
 $datos = getCita($conn, $id_cita);
 
 if (!$datos) {
-    header("Location: buscar_cita.php");
+    header("citas/buscar");
     exit();
 }
 
@@ -50,7 +48,7 @@ if (isset($_POST['guardar'])) {
 
     if ($estado === "Cancelada") {
         if ($conn->query("DELETE FROM cita WHERE id_cita = $id_cita")) {
-            header("Location: buscar_cita.php?msg=eliminada");
+            header("citas/buscar?msg=eliminada");
             exit();
         } else {
             $mensaje = '<div class="alert alert-danger">
@@ -219,7 +217,7 @@ $consultorios = $conn->query("SELECT id_consultorio, numero FROM consultorio ORD
                     <button type="submit" name="guardar" class="btn btn-primary">
                         <i class="bi bi-floppy me-1"></i> Guardar Cambios
                     </button>
-                    <a href="buscar_cita.php" class="btn btn-secondary">
+                    <a href="/citas/buscar_cita.php" class="btn btn-secondary">
                         <i class="bi bi-arrow-left me-1"></i> Volver
                     </a>
                 </div>

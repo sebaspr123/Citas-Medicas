@@ -1,6 +1,6 @@
-﻿<?php include "includes/plantilla.php"; ?>
-<?php include "config/db_connect.php";
-
+﻿<?php include __DIR__ . "/includes/plantilla.php"; ?>
+<?php include __DIR__ . "/config/db_connect.php"; ?>
+<?php
 $totalPacientes = $conn->query("SELECT COUNT(*) AS c FROM paciente")->fetch_assoc()['c'];
 $totalMedicos   = $conn->query("SELECT COUNT(*) AS c FROM medico")->fetch_assoc()['c'];
 $totalCitas     = $conn->query("SELECT COUNT(*) AS c FROM cita")->fetch_assoc()['c'];
@@ -8,114 +8,114 @@ $totalHoy       = $conn->query("SELECT COUNT(*) AS c FROM cita WHERE fecha = CUR
 ?>
 
 <style>
-.dash-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
-}
+    .dash-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
 
-.dash-card {
-    padding: 30px 25px;
-    border-radius: 14px;
-    color: white;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
+    .dash-card {
+        padding: 30px 25px;
+        border-radius: 14px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
 
-.dash-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+    .dash-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 
-.dash-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
+    .dash-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
 
-.dash-card.card-blue {
-    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
-}
+    .dash-card.card-blue {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
 
-.dash-card.card-green {
-    background: linear-gradient(135deg, #198754 0%, #157347 100%);
-}
+    .dash-card.card-green {
+        background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    }
 
-.dash-card.card-orange {
-    background: linear-gradient(135deg, #fd7e14 0%, #f8690e 100%);
-}
+    .dash-card.card-orange {
+        background: linear-gradient(135deg, #fd7e14 0%, #f8690e 100%);
+    }
 
-.dash-card.card-purple {
-    background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
-}
+    .dash-card.card-purple {
+        background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+    }
 
-.dash-number {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
+    .dash-number {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
-.dash-label {
-    font-size: 15px;
-    opacity: 0.95;
-    font-weight: 500;
-}
+    .dash-label {
+        font-size: 15px;
+        opacity: 0.95;
+        font-weight: 500;
+    }
 
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
 
-.quick-btn {
-    padding: 18px 25px;
-    border-radius: 10px;
-    font-size: 15px;
-    text-decoration: none;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
+    .quick-btn {
+        padding: 18px 25px;
+        border-radius: 10px;
+        font-size: 15px;
+        text-decoration: none;
+        font-weight: 600;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
-.quick-btn.primary {
-    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
-    color: white;
-}
+    .quick-btn.primary {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+        color: white;
+    }
 
-.quick-btn.secondary {
-    background: white;
-    color: #0d6efd;
-    border: 2px solid #0d6efd;
-}
+    .quick-btn.secondary {
+        background: white;
+        color: #0d6efd;
+        border: 2px solid #0d6efd;
+    }
 
-.quick-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
+    .quick-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
 
-.quick-btn.secondary:hover {
-    background: #0d6efd;
-    color: white;
-}
+    .quick-btn.secondary:hover {
+        background: #0d6efd;
+        color: white;
+    }
 </style>
 
 <div class="container-fluid">
@@ -150,21 +150,19 @@ $totalHoy       = $conn->query("SELECT COUNT(*) AS c FROM cita WHERE fecha = CUR
     </h2>
 
     <div class="quick-actions">
-        <a href="registrar_cita.php" class="quick-btn primary">
+        <a href="/citas/registrar_cita.php" class="quick-btn primary">
             <i class="bi bi-calendar-plus"></i> Registrar Cita
         </a>
-        <a href="lista_pacientes.php" class="quick-btn secondary">
+        <a href="/pacientes/lista_pacientes.php" class="quick-btn secondary">
             <i class="bi bi-people"></i> Ver Pacientes
         </a>
-        <a href="lista_medicos.php" class="quick-btn secondary">
+        <a href="/medicos/lista_medicos.php" class="quick-btn secondary">
             <i class="bi bi-person-badge"></i> Ver Médicos
         </a>
-        <a href="calendario.php" class="quick-btn secondary">
+        <a href="/citas/calendario.php" class="quick-btn secondary">
             <i class="bi bi-calendar2"></i> Calendario
         </a>
     </div>
 </div>
 
-<?php include "includes/footer.php"; ?>
-
-
+<?php include __DIR__ . "/includes/footer.php"; ?>

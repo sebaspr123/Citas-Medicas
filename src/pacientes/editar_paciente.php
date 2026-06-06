@@ -2,13 +2,11 @@
 <?php include "../config/db_connect.php"; ?>
 
 <?php
-// editar_paciente.php
 ini_set('display_errors',1); error_reporting(E_ALL);
-include "../config/db_connect.php";
 
 $errors=[]; $success=null;
 $id = intval($_GET['id'] ?? 0);
-if ($id<=0) { header("Location: lista_pacientes.php"); exit; }
+if ($id<=0) { header("pacientes/lista"); exit; }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre'] ?? '');
@@ -44,10 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // cargar datos actuales
 $res = $conn->query("SELECT * FROM paciente WHERE id_paciente = $id");
-if (!$res || $res->num_rows==0) { header("Location: lista_pacientes.php"); exit; }
+if (!$res || $res->num_rows==0) { header("pacientes/lista"); exit; }
 $data = $res->fetch_assoc();
 
-include "../includes/plantilla.php";
 ?>
 <div class="card mx-auto" style="max-width: 700px;">
     <div style="padding: 30px;">
@@ -111,7 +108,7 @@ include "../includes/plantilla.php";
             <button class="btn btn-primary" type="submit">
                 <i class="bi bi-check-circle"></i> Guardar cambios
             </button>
-            <a href="lista_pacientes.php" class="btn btn-secondary">
+            <a href="/pacientes/lista_pacientes.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Volver
             </a>
         </div>

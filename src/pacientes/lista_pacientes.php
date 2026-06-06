@@ -1,6 +1,5 @@
-﻿<?php include "../includes/plantilla.php"; ?>
-<?php
-ini_set('display_errors',1);
+﻿<?php
+ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once "../config/db_connect.php";
@@ -14,7 +13,7 @@ if (isset($_GET['delete'])) {
 
     if ($id > 0) {
         if ($conn->query("DELETE FROM paciente WHERE id_paciente = $id")) {
-            header("Location: lista_pacientes.php?ok=1");
+            header("Location: /pacientes/lista_pacientes.php?ok=1");
             exit;
         } else {
             $errors[] = "Error al eliminar: " . $conn->error;
@@ -26,6 +25,7 @@ if (isset($_GET['ok'])) {
     $info[] = "Paciente eliminado correctamente.";
 }
 
+include "../includes/plantilla.php"; 
 ?>
 
 <div class="card mx-auto" style="max-width: 1100px;">
@@ -65,7 +65,7 @@ if (isset($_GET['ok'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($r = $res->fetch_assoc()): ?>
+                    <?php while ($r = $res->fetch_assoc()): ?>
                         <tr>
                             <td><?= $r['id_paciente'] ?></td>
                             <td><strong><?= htmlspecialchars($r['nombre'] . " " . $r['apellido']) ?></strong></td>
@@ -73,10 +73,10 @@ if (isset($_GET['ok'])) {
                             <td><?= htmlspecialchars($r['telefono']) ?></td>
                             <td><?= htmlspecialchars($r['correo']) ?></td>
                             <td style="text-align: center;">
-                                <a class="btn btn-sm btn-primary" href="editar_paciente.php?id=<?= $r['id_paciente'] ?>" title="Editar">
+                                <a class="btn btn-sm btn-primary" href="/pacientes/editar_paciente.php?id=<?= $r['id_paciente'] ?>" title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a class="btn btn-sm btn-danger" href="?delete=<?= $r['id_paciente'] ?>" onclick="return confirm('¿Eliminar paciente?')" title="Eliminar">
+                                <a class="btn btn-sm btn-danger" href="/pacientes/lista_pacientes.php?delete=<?= $r['id_paciente'] ?>" onclick="return confirm('¿Eliminar paciente?')" title="Eliminar">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
@@ -93,11 +93,10 @@ if (isset($_GET['ok'])) {
     <?php endif; ?>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-        <a href="registrar_paciente.php" class="btn btn-success">
+        <a href="/pacientes/registrar_paciente.php" class="btn btn-success">
             <i class="bi bi-person-plus"></i> Agregar Paciente
         </a>
     </div>
 </div>
 
 <?php include "../includes/footer.php"; ?>
-

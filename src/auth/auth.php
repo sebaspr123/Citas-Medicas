@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Si no hay sesión activa, redirigir al login
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
+    header("Location: auth/login.php");
     exit;
 }
 
@@ -17,7 +17,7 @@ if (!isset($_SESSION['id_usuario'])) {
  */
 function soloAdmin() {
     if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
-        header("Location: index.php?error=acceso_denegado");
+        header("Location: ../index.php?error=acceso_denegado");
         exit;
     }
 }

@@ -1,6 +1,5 @@
-﻿<?php include "../includes/plantilla.php"; ?>
-<?php
-include "../config/db_connect.php";
+﻿<?php
+include __DIR__ . "/../config/db_connect.php";
 
 header('Content-Type: application/json; charset=utf-8');
 
