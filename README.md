@@ -159,5 +159,5 @@ Tablas principales:
 
 ## 👨‍💻 Autor
 
-Desarrollado por **Sebastián** — Ingeniería de Sistemas UNICOR, Semestre VI  
+Desarrollado por **Sebastián Pretel & Andres Burgos** — Ingeniería de Sistemas UNICOR, Semestre VI  
 Asignatura: Ingeniería de Software — Corte III
